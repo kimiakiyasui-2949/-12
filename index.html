@@ -1,289 +1,542 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<section<sectio>>, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>フルスクリーン 7ページ（Hero文字ループ付き）</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+
+    .wrap{
+      height:100vh;
+      overflow-y:auto;
+      scroll-snap-type:y mandatory;
+      -webkit-overflow-scrolling:touch;
+      scroll-behavior:smooth;
+      font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, meiryo, sans-serif;
+      background:white;
+      color:#111111;
+    }
+    /* ===== 中央から開くイントロ演出 ===== */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;         /* イントロの背景色（好みで変更可） */
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  animation: openFromCenter 1.8s ease-in-out forwards;
+}
+
+@keyframes openFromCenter {
+  0% {
+    clip-path: inset(0 50% 0 50%); /* 真ん中からスタート */
+  }
+  100% {
+    clip-path: inset(0 0 0 0);     /* 全面表示 */
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ロゴや文字を表示したい場合 */
+.intro-text {
+  color: white;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  animation: fadeOutText 1.2s ease-in-out 0.8s forwards;
+}
+
+@keyframes fadeOutText {
+  to { opacity: 0; transform: scale(1.1); }
+}
+
+    section.page{
+      position:relative;
+      min-height:100vh;
+      height:100vh;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      scroll-snap-align:start;
+    }
+   .page.alt2 {
+  position: relative;
+}
+
+    
+    .word{
+        position: absolute;
+        top:12%;
+        right: 10%;
+        left: 10%;
+    }
+     .impact{
+    position: absolute;
+    top: 5%;
+    font-size: 30px;
+    font-weight: bold;
+   }
+    .word-2{
+        position: absolute;
+        top: 12%;
+        left: 10%;
+          text-align: left; /* ← 左揃えに変更 */
+    }
+    .word-3{
+        position: absolute;
+        top: 12%;
+        left: 5%;
+          text-align: left; /* ← 左揃えに変更 */
+        padding-top: 9px;
+    }
+    .page.hero{
+      background-position:center center;
+    }
+    .word-4{
+        position: absolute;
+        top: 12%;
+        left:5%;
+          text-align: left; /* ← 左揃えに変更 */
+    }
+    
+    .page.hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(rgba(246, 245, 245, 0.35));
+      z-index:1;
+    }
+
+    .hero .text{
+      position:relative;
+      z-index:2;
+      padding:1.25rem;
+      max-width:90%;
+      text-align:center;
+      backdrop-filter: blur(0.2px);
+    }
+
+    /* ===== Hero文字ループ ===== */
+    .hero h1 {
+      font-size:70px;
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:0.02em;
+      margin-bottom:0.4rem;
+      color: rgb(146, 213, 96);
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      z-index: 999;
+    }
+
+    .hero h1 span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-text 15s linear infinite;
+    }
+    .messege{
+      position: absolute;
+      top: 5%;
+      left: 20%;
+      font-size: 40px;
+    }
+    .messege-2{
+      position: absolute;
+      top:15%;
+      left:10%;
+      font-size: 80px;
+      font-weight: bold;
+    }
+
+
+    @keyframes scroll-text {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* 背景画像 */
+    .hero .hero-image{
+      position:absolute;
+      top:45%;
+      left:50%;
+      transform:translate(-50%, -50%);
+      width: 35%;
+      height:auto;
+      object-fit:contain;
+      z-index:0;
+      filter:brightness(0.9);
+      pointer-events:none;
+    }
+    .scroll{
+      position: absolute;
+      top:80%;
+      font-size: 24px;
+    }
+    .marker{
+      position: absolute;
+      top: 90%;
+    
+      font-weight: bold;
+    }
+    /* 動画 */
+    .video-1, .video-2, .video-3 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 34%;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .page.alt2 p.word-4{
+        position: absolute;
+        top: 20%;
+    .text{
+      display: flex;
+    }     
+        
+  
+
+    }
+    .mail{
+      position: absolute;
+      top: 85%;
+      right: 60%;
+      font-size: small;
+      text-align: left;
+      left: 10%;
+    }
+
+    .text-2{
+      position: absolute;
+      top: 87%;
+      left:60%;
+      font-weight: small;
+
+
+}
+    .page img{
+      position: absolute;
+      width: 40%;
+      left:50%;
+      end:45%;
+    }
+    /* デフォルト（PC想定） */
+.impact {
+    position: absolute;
+    top: 5%;
+    font-size: 80px;   /* PCで大きく表示 */
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.word-1{
+  position: absolute;
+  top:10px;
+  font-size: 80px;
+  font-weight: bold;
+  font-family:Arial, Helvetica, sans-serifaa ;
+  text-align: left;
+  padding-bottm 24px;
+}
+.word-7 {
+    position: absolute;
+    top: 5%;      /* 上から5%の位置 */
+    right: 18%%;     /* 左から5%の位置 */
+    font-size: 80px; 
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+     
+   
+}
+.content-box{
+  position: ;
+}
+
+
+
+@media (max-width: 600px) {
+    .word-1 {
+        font-size: 24px; /* スマホでは小さく */
+        top: 2%;         /* 位置も微調整可 */
+        left:1;
+    }
+}
+/* スマホ用（幅600px以下） */
+@media (max-width: 600px) {
+    .impact {
+        font-size: 24px; /* スマホでは小さく */
+        top: 3%;         /* 位置も微調整可 */
+    }
+    .word-7 {
+      position: absolute;
+        font-size: 24px; /* スマホでは小さく */
+        top: 8%;
+        left:70%         /* 位置も微調整可 */
+    }
+
+}
+
+ 
+    /* スマホ対応 */
+    @media (max-width:600px){
+      .hero h1 { font-size:2rem; }
+      .hero h1 span { animation-duration:10s; }
+      .hero .hero-image{width:55%;}
+      .video-1, .video-2, .video-3 { width:70%; }
+      .dots{right:8px;}
+    }
+   {
+   
+}
+  .page img{
+    width: 69%;
+    position: absolute;
+    left:4%;
+    end:20%;
+  }
+  .dots {
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px;
+}
+
+.dot {
+  font-size: 14px;
+  color: rgba(11, 11, 11, 0.6);
+  cursor: pointer;
+  transition: transform .18s, color .18s;
+}
+
+.dot.active {
+  transform: scale(1.3);
+  color: rgb(241, 235, 235);
+}
+
+    .page.alt{background:linear-gradient(180deg, #0b0000, #f2f1f1);}
+    .page.alt3{background:linear-gradient(180deg, #0b0000, #f2f1f1);}
+    .page.alt2{background:linear-gradient(180deg, #fffdfd, #f7f8f9)}
+    .page.alt4{background:linear-gradient(180deg, #fffdfd, #f7f8f9)}
+    .content-box{
+      padding:1.25rem;
+      max-width:900px;
+      text-align:center;
+    }
+   /* --- PC表示（幅900px以上）のとき、画像を小さく --- */
+@media (min-width: 900px) {
+  .page img {
+    width: 28%;           /* ← PCでの画像サイズを小さく調整 */
+    left: 50%;
+    transform: translateX(-50%); /* 中央寄せ（必要に応じて削除OK） */
+  }
+}
+/* ===== 下から上にふわっと現れるアニメーション ===== */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px); /* 下から登場 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 最初は非表示状態 */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* 表示トリガーが入ったときに動く */
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: slideUpFade 1.2s ease-out forwards;
+}
+
+/* ===== 下から上にふわっと現れるアニメーション ===== */
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: slideUpFade 1.2s ease-out forwards;
+}
+
+  </style>
 </head>
 <body>
-    <div class="container">
+  <div class="intro-overlay">
+    <div class="intro-text"></div>
+  </div>
 
-    <div class="left-menu">
-        <ul>
-            <li data-target="menu">Menu</li>
-            <li data-target="about">About</li>
-            <li data-target="gallery">Gallery</li>
-            <li data-target="contact">Contact</li>
-        </ul>
-    </div>
+  <div class="wrap" id="wrap">
 
-    <div class="right-content">
-        <!-- Menu -->
-        <div id="menu" class="content-item active">
-            <img src="street4.jpg" alt="steer" class="photo">
-            <p>About the Makeup Industry in New York<br>
+    <section class="page hero" id="page-1" aria-label="トップページ">
+        <p class="word">From the silent depths beyond our skies,<br>
+A whisper drifts where starlight <br>dies.
+Through endless voids and<br> cosmic streams,
+It travels here <br>on threads of dreams.</p>
+      <img class="hero-image" src="mono.jpg" alt="背景画像（差し替えてください）" />
+      <div class="text">
+        <h1><span>The image loops</span></h1>
+      </div>
+      <p class="scroll">scroll</p>
+      <p class="marker">↓</p>
+    </section>
 
-New York’s makeup industry is one of the most dynamic and influential in the world. As a global fashion and cultural hub, the city attracts top makeup artists, beauty brands, and creative talent from all over the world. The industry is driven by fashion weeks, editorial shoots, film and TV productions, and a constantly evolving beauty consumer market.<br>
+    <section class="page alt3" id="page-2">
+      <div class="content-box">
+        <h1>O1</h1>
+        <p>True transformation begins when you start refining every aspect of your life—mind, body, environment, and relationships</p>
+      </div>
+    </section>
 
-New York is home to many major beauty companies, including both established brands and innovative indie startups. Makeup artists in the city often work across multiple fields—runway, editorial, commercial advertising, theater, and social media. The fast-paced environment encourages creativity, trend-setting looks, and strong technical skills.<br>
+    <section class="page alt4" id="page-3">
+      <div class="content-box">
+       <p class="impact fade-up">A moment of impact</p>
+        <p class="word-2">Morning light spills across the floor,
+Soft <br>amber glows through the open door.<br>
+Coffee steams in gentle swirls,<br>
+A quiet start as the day unfurls.</p>
+        <h2>ページ 3</h2>
+        <video src="fashon-1.mp4" class="video-1" autoplay muted loop playsinline></video>
+      </div>
+    </section>
 
-In addition, New York's diverse population plays a big role in shaping the local beauty culture. Artists are expected to work with a wide range of skin tones, styles, and cultural aesthetics. Because of this diversity, New York continues to be a major source of global beauty trends, influencing everything from everyday makeup styles to high-fashion looks.
+    <section class="page alt" id="page-4">
+      <div class="content-box">
+        <h1>02</h1>
+        <p>Enter a dynamic world</p>
+      </div>
+    </section>
 
-            </p>
+    <section class="page alt4" id="page-5">
+      <div class="content-box">
+      <p class="word-1 fade-up">Fashion and passion drive creativity</p>
+        <P class="word-3">Echoes of the past resonate in every scene<br>
+Modern voices drift through<br> the antique air<br>
+Whispers of bygone days linger everywhere.</P>
+        <h2>ページ 5</h2>
+        <video src="fashon.mp4" class="video-2" autoplay muted loop playsinline></video>
+      </div>
+    </section>
+
+    <section class="page alt2" id="page-6">
+      <div class="content-box">
+         <p class="word-7 fade-up">In Cafe</p>
+        <p class="word-4">When weary feet begin to slow,
+           Take a breath<br>let your heart<br> rest a while
+           And then, guided by your heart,
+           Let’s wander off to a café.</p>
+        <h2>ページ 6</h2>
+        <video src="in cafe-1.mp4" class="video-3" autoplay muted loop playsinline></video>
+      </div>
+    </section>
+
+    <section class="page" id="page-7">
+      <div class="content-box">
+        <img src="hukei.jpg">
+       
+        <p class="messege-2">IN side</p>
+        <div class="text"><p class="mail"> mail </p>
+          <p class="text-2"> contents by <br>kento utsbo</p>
         </div>
+        
+      </div>
+    </section>
+  </div>
 
-        <!-- About -->
-        <div id="about" class="content-item">
-            <img src="red.jpg" alt="red" class="red">
-            <p>Kent’s World of Makeup
 
-Kent’s world of makeup is built on creativity, freedom, and bold self-expression. His approach blends artistry with emotion, turning every face into a unique canvas. Rather than following trends, Kent focuses on enhancing individuality—highlighting each person’s natural beauty while adding his signature touch of drama and sophistication.
 
-Drawing inspiration from New York’s vibrant street culture, high-fashion runways, and global beauty influences, Kent creates looks that are modern, dynamic, and unforgettable. His work pushes boundaries, mixing color, texture, and technique to craft makeup that tells a story.
-
-For Kent, makeup is more than cosmetics—it’s a form of communication. His world invites people to explore their identity, embrace diversity, and celebrate beauty in all its forms.</p>
-        </div>
-
-        <!-- Gallery -->
-         
-        <div id="gallery" class="content-item">
-           <div class="slideshow-container">
-        <img src="show.jpg" class="slide-img">
-        <img src="street3.jpg" class="slide-img">
-        <img src="street6.jpg" class="slide-img">
-        <img src="kyoto.jpg" class="slide-img">
-    </div>
-            <h1>My Previous Works</h1>
-            <p class="text">My body of work reflects a deep passion for beauty, culture, and storytelling through makeup and photography. Over the years, I have created a wide range of pieces inspired by the vibrant energy of New York, the elegance of Kyoto, and the bold creativity found in fashion shows and street culture.
-
-My street photography captures raw emotion and individuality, highlighting the unique style and spirit of people in their everyday environments. The show-focused works express a more dramatic side—looks designed for runways, creative shoots, and artistic concepts that push beyond traditional makeup styles.
-
-I also explore the contrast between different cities and cultures, blending modern urban aesthetics with timeless beauty elements. Each piece represents a moment, a mood, and a perspective shaped by my experiences.
-
-These works together tell the story of my creative journey—one that continues to grow as I explore new ideas, techniques, and forms of self-expression.</p>
-        </div>
-
-        <!-- Contact -->
-        <div id="contact" class="content-item">
-            <img src="style.jpg" alt=""class="style">
-           
-            <footer>usubo kento .com</footer></p>
-        </div>
-    </div>
-
+  <div class="dots" id="dots">
+  <div class="dot active" data-target="page-1">●</div>
+  <div class="dot" data-target="page-2">●</div>
+  <div class="dot" data-target="page-3">●</div>
+  <div class="dot" data-target="page-4">●</div>
+  <div class="dot" data-target="page-5">●</div>
+  <div class="dot" data-target="page-6">●</div>
+  <div class="dot" data-target="page-7">●</div>
 </div>
-<style>
-    .container {
-    display: flex;
-    height: 100vh;
-}
-
-.left-menu {
-    width: 180px;
-    background: none;
-    color: #0c0c0c;
-    padding: 20px;
-}
-
-.left-menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.left-menu li {
-    padding: 15px 0;
-    cursor: pointer;
-    border-bottom: 1px solid #444;
-}
-
-.left-menu li:hover {
-    color: #ffcc00;
-}
-
-.right-content {
-    flex: 1;
-    padding: 30px;
-}
-
-.content-item {
-    display: none;
-}
-
-.content-item.active {
-    text-align: right;
-    display: block;
-}
-.content-item p{
-    text-align: left;
-    top:4px;
-}
-
-/* スライドショーの画像を重ねて、1枚だけ表示 */
-.slideshow-container {
-    position: relative;
-    width: 100%;
-    max-width: 800px; /* 好きに変更OK */
-    margin: 0 auto 20px;
-}
-
-.slide-img {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    left:-30px;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.slide-img.active {
-    opacity: 1;
-}
-
-.content-item img {
-    max-width: 100%;
-    margin-bottom: 20px;
-}
-
-.content-item .photo-3{
-    position: absolute;
-    left:50%;
-    max-width:100px;
-}
-.content-item img {
-    max-width: 40%;
-    margin-bottom: 20px;
-}
-.content-item .red{
-    max-width:200px;
-}
-.content-item .text{
-    position: absolute;
-    top:550px;
-}
-.content-item .style{
-    width: 80%;
-}
-footer {
-    text-align: left;
-    padding-bottom: 36px;
-}
-@media (max-width: 380px) {
-    .content-item img {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-
-    /* スライドショー */
-    .slide-img {
-        position: relative;
-        width: 100%;
-        left: 0;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-    }
-
-    /* About の red.jpg */
-    .red {
-        max-width: 100% !important;
-    }
-
-    /* street4.jpg */
-    .photo {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
 
 
-    /* About の red.jpg も大きく */
-    .red {
-        max-width: 80%;
-    }
-    .content-item.active {
-        text-align: center;
-        display: block;
-    }
-    .content-item .streer {
-    max-width: 200px;
-    margin-bottom: 20px;
-}
+  <script>
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach(d=> d.addEventListener('click', ()=>{
+      const id = d.dataset.target;
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }));
 
+    const pages = document.querySelectorAll('section.page');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const id = entry.target.id;
+          document.querySelectorAll('.dot').forEach(dot=>dot.classList.toggle('active', dot.dataset.target===id));
+        }
+      });
+    }, {threshold:0.6});
+    pages.forEach(p=>io.observe(p));
+    <script>
+  // ===== スクロールでフェードアップ =====
+  const fadeUps = document.querySelectorAll('.fade-up');
 
-
-.content-item .red{
-    max-width:300px;
-}
- 
-    
-       .container {
-    display: flex;
-    height: 100vh;
-}
-
-.left-menu {
-    width: 120px;
-    background: none;
-    color: #0c0c0c;
-    padding: 12px;
-}
-
-.left-menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.left-menu li {
-    padding: 7px 0;
-    cursor: pointer;
-    
-}
-.content-item p{
-    text-align: left;
-    top:4px;
-    font-size: 8px;
-}
-
-.content-item .text{
-    position: absolute;
-    top:300px;
-}
-footer{
-    position: absolute;
-    left:7px;
-    font-size: 8px;
-}
- h1{
-    font-size:10px;
- }
-}
-
-</style>
-<script>
-    const menuItems = document.querySelectorAll(".left-menu li");
-const contents = document.querySelectorAll(".content-item");
-
-menuItems.forEach(item => {
-    item.addEventListener("click", () => {
-        const target = item.getAttribute("data-target");
-
-        contents.forEach(c => c.classList.remove("active"));
-        document.getElementById(target).classList.add("active");
+  const observerFade = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // 一度だけアニメーションさせたい場合はこちらを追加
+        observerFade.unobserve(entry.target);
+      }
     });
-});
-// スライドショー --------------------
-const slides = document.querySelectorAll(".slide-img");
-let index = 0;
+  }, { threshold: 0.4 }); // 画面に40%入ったら発火
 
-function showSlide() {
-    slides.forEach(img => img.classList.remove("active"));
-    slides[index].classList.add("active");
-
-    index = (index + 1) % slides.length; // 次の画像へ
-}
-
-showSlide();
-setInterval(showSlide, 3000); // 3秒ごとに切り替え
+  fadeUps.forEach(el => observerFade.observe(el));
 
 
+  </script>
+  <script>
+  const fadeUps = document.querySelectorAll('.fade-up');
+
+  const observerFade = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observerFade.unobserve(entry.target); // 一度だけ発火
+      }
+    });
+  }, { threshold: 0.4 });
+
+  fadeUps.forEach(el => observerFade.observe(el));
 </script>
+
+
 </body>
 </html>
+
+,
