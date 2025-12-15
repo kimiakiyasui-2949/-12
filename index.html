@@ -1,239 +1,356 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Intro → Menu (改訂版)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio UI</title>
 
 <style>
-  html, body {
-      background-color: black;
-      margin: 0;
-      padding: 0;
+/* ===== 基本 ===== */
+body{
+  margin:0;
+  background:#fff;
+  color:#000;
+  font-family:Arial,sans-serif;
+  overflow:hidden; /* intro中はスクロール不可 */
+}
+
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  z-index:300;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.intro-photos{
+  position:absolute;
+  inset:0;
+}
+
+.ip{
+  position:absolute;
+  width:120px;
+  opacity:0;
+  animation:fastMove 1.1s ease-in-out forwards;
+}
+
+/* 配置：中央基準 → 左1枚 / 右2枚（上下） */
+.ip.left{ left:42%; animation-delay:.05s; }
+.ip.right-top{ left:58%; animation-delay:.15s; }
+.ip.right-bottom{ left:58%; animation-delay:.25s; }
+
+/* 下→上に高速通過 */
+@keyframes fastMove{
+  0%{ top:115%; opacity:1; }
+  60%{ opacity:1; }
+  100%{ top:-25%; opacity:0; }
+}
+
+#intro-name{
+  font-size:40px;
+  font-weight:bold;
+  
+  color: black;
+  letter-spacing:2px;
+  z-index:10;
+  white-space:nowrap;
+}
+
+.fade-out{
+  animation:fadeOut .8s ease forwards;
+}
+@keyframes fadeOut{ to{ opacity:0; } }
+
+/* ===== MAIN ===== */
+#main{ display:none; }
+
+/* ===== メニュー ===== */
+.menu{
+  position:fixed;
+  top:20px;
+  left:20px;
+  line-height:1.6;
+  z-index:20;
+}
+.menu .name{ font-size:24px; font-weight:bold; }
+.menu span{ cursor:pointer; display:block; }
+
+/* ===== 初期写真 ===== */
+.photo{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:35%;
+  cursor:pointer;
+}
+
+/* ===== ギャラリー ===== */
+.gallery{ display:none; }
+.gallery.active{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;
+  padding:120px 80px 120px;
+}
+.gallery img{
+  width:60%;
+  max-width:220px;
+  margin:auto;
+  opacity:0;
+  transform:translate(var(--x),var(--y));
+  animation:floatIn 1.2s ease forwards;
+  cursor:pointer;
+}
+@keyframes floatIn{ to{opacity:1;transform:translate(0,0);} }
+
+/* ===== profile（PC 左下） ===== */
+#profile{
+  display:none;
+  position:fixed;
+  bottom:180px;
+  left:20px;
+  width:420px;
+  line-height:1.9;
+}
+
+/* ===== contact（PC 左下） ===== */
+#contactForm{
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:20px;
+}
+#contactForm form{ display:flex; flex-direction:column; }
+#contactForm input,
+#contactForm textarea{
+  width:260px;
+  margin:6px 0;
+  padding:8px;
+  font-size:14px;
+}
+
+/* ===== モーダル ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.modal img{ max-width:80vw; max-height:85vh; }
+.modal .close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:32px;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ===== スマホ ===== */
+@media (max-width:768px){
+  body{ overflow:auto; }
+  .photo{ width:60%; }
+  .gallery.active{
+    grid-template-columns:0.9fr 1.1fr; /* 左小さめ */
+    padding:170px 20px 80px;
   }
-  .intro-wrapper {
-width: 100vw;
-height: 100vh;
-position: relative;
-background: black;
-display: flex;
-justify-content: center;
-align-items: center;
-overflow: hidden;
-}
-
-
-.intro-img {
-position: absolute;
-width: 60%;
-max-width: 550px;
-opacity: 0;
-animation: slideUp 4s ease-in-out forwards;
-}
-
-
-.intro-img.img2 {
-animation-delay: 1s;
-}
-
-
-.intro-img.img3 {
-animation-delay: 2s;
-}
-
-
-@keyframes slideUp {
-0% {
-transform: translateY(100%);
-opacity: 0;
-}
-30% {
-opacity: 1;
-}
-60% {
-transform: translateY(0);
-opacity: 1;
-}
-100% {
-transform: translateX(-150%);
-opacity: 0;
-}
-}
-
-
-.intro-text {
-position: absolute;
-color: white;
-font-size: 32px;
-opacity: 0;
-animation: fadeIn 3s ease-in-out 2.5s forwards;
-}
-.intro-text-1 {
-    position: absolute;
-    color: white;
-    top: 90%;
-    opacity: 0;
-    font-size: 18px;
-    animation: scrollFade 3s ease-in-out 3s forwards;
-}
-
-@keyframes scrollFade {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-
-
-@keyframes fadeIn {
-0% { opacity: 0; }
-100% { opacity: 1; }
-}
-
-  .work {
-      text-align: center;
-      font-size: 30px;
-      color: white;
-      margin-top: 40px;
+  #profile{
+    position:relative;
+    bottom:auto; left:auto;
+    width:90%;
+    margin:180px auto 80px;
   }
+  /* ===== BEAUTY 左側を少し小さく ===== */
+#beauty.active{
+  grid-template-columns:0.85fr 1.15fr;
+}
 
-  .text {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      z-index: 100;
-  }
+#beauty.active img:nth-child(odd){
+  transform: scale(0.92);
+}
 
-  .main {
-      width: 100%;
-      height: auto;
-  }
-
-  /* ▼ 写真のフェードイン初期状態 */
- .photo {
-     padding-top: 24px;
-      width: 70%; /* ← 86% → 小さく調整 */
-      height: auto;
-      max-width: 440px; /* ← 480px → 少し小さく */
-      display: block;
-      margin: 0 auto 20px auto;
-
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-  }
-
-  /* ▼ 表示モード（ふぁーっと表示） */
-  .show {
-      opacity: 1;
-      transform: translateY(0);
-  }
-
-  .main p {
-      color: white;
-      text-align: center;
-  }
-
-  /* ▼ スマホ */
-  @media screen and (max-width: 480px) {
-       .text {
-        font-size: 16px;
-        top: 10px;
-        left: 10px;
-    }
-
-    .photo {
-        width: 80%;   /* ← 今より大きく！ */
-        max-width: 100%;
-    }
-  }
-
-  /* ▼ PC */
-  @media screen and (min-width: 481px) {
-      .main {
-          width: 100%;
-          margin: 0 auto;
-      }
-
-      .text-8{
-        position: fixed;
-        top: 150px;
-        left: 10%;
-        font-size: 20px;
-      }
-
-      .photo {
-          width: 60%; /* ← PCも小さく */
-          max-width: 550px;
-      }
-
-      .main p {
-          font-size: 18px;
-      }
-  }
+}
+/* ===== contact footer ===== */
+.contact-footer{
+  margin-top:12px;
+  font-size:12px;
+  color:#666;
+  letter-spacing:0.5px;
+}
+.text-1{
+  font-size: 14px;
+}
 </style>
 </head>
 
 <body>
-<div class="intro-wrapper">
-<img src="road.jpg" class="intro-img img1" />
-<img src="snow-2.jpg" class="intro-img img2" />
-<img src="street-1.jpg" class="intro-img img3" />
 
-
-<div class="intro-text">KENTO UTSUBO</div>
-<div class="intro-text-1">↓scroll</div>
-
+<!-- ===== INTRO ===== -->
+<div id="intro">
+  <div class="intro-photos">
+    <img src="110st newyork.jpg" class="ip left">
+    <img src="art.jpg" class="ip right-top">
+    <img src="aunt1.jpg" class="ip right-bottom">
+  </div>
+  <div id="intro-name"></div>
 </div>
-<a href="manu.html" class="text">manu</a>
-<p class="work">work</p>
 
-<section class="main">
-    <p class="text-6">Kent's Worldwide Photo Collection</p>
-    <p class="text-8">Pursuing beauty</p>
+<!-- ===== MAIN ===== -->
+<div id="main">
 
-    <img src="110st newyork.jpg" class="photo"><p>text</p>
-    <img src="art.jpg" class="photo"><p>text</p>
-    <img src="black.jpg" class="photo"><p>text</p>
-    <img src="show.jpg" class="photo"><p>text</p>
-    <p>Original work</p>
-    <img src="aunt1.jpg" class="photo"><p>text</p>
-    <img src="bluesky.jpg" class="photo"><p>text</p>
-    <img src="tika.jpg" class="photo"><p>text</p>
-    <img src="wiliamsburg.jpg" class="photo"><p>text</p>
-    <img src="bluesky.jpg" class="photo"><p>text</p>
-    <img src="subeay2.jpg" class="photo"><p>text</p>
+  <div class="menu">
+    <div class="name" id="m-home">kentoustubo</div>
 
-</section>
+    <span id="m-work">work</span>
+    <span id="m-beauty">beauty</span>
+    <span id="m-profile">profile</span>
+    <span id="m-contact">contact</span>
+  </div>
+
+  <img src="110st newyork.jpg" class="photo" id="start">
+
+  <div class="gallery" id="work">
+    <img src="beach.jpg">
+    <img src="black.jpg">
+    <img src="bluesky.jpg">
+    <img src="street.jpg">
+    <img src="shadow.jpg">
+    <img src="subeay2.jpg">
+    <img src="flower..jpg">
+    <img src="Id 324.jpg">
+    <img src="mono.jpg">
+  </div>
+
+  <div class="gallery" id="beauty">
+    <img src="snow.jpg">
+    <img src="a-to.jpg">
+    <img src="ao.jpg">
+    <img src="snow-2.jpg">
+    <img src="tikatetu.jpg">
+    <img src="tree.jpg">
+     <img src="tikatetu.jpg">
+      <img src="wiliamsburg.jpg">
+  </div>
+
+  <div id="profile">
+    
+    <p class="text-1">
+      兵庫県神戸市出身。高校卒業後、美容学校を卒業し美容師に。
+2008年～2010年　ニューヨークで、撮影・ヘアーサロンでのアシスタントを経験。
+2010年～2013年　日本でメイクアップアーティストとして活躍。
+2013年～2018年　再度渡米。ニューヨークでフリーのメイクアップアーティストとしてVOGUE magazine、Harper’s Bazaar、V magazine などの世界的有名雑誌を手がけながら、ファッションショーでのリードメイクを手がける。
+2018年～現在　複数の化粧品会社からのスポンサーシップを獲得し、ニューヨークファッションウィーク（NYFW）でショーのリードメイク、オーガナイザーとして携わりながら、自らもモデルとしファッションショーを歩くという奇抜な演出を行い、メディアに取り上げらる。
+    </p>
+  </div>
+
+  <div id="contactForm">
+    <form action="https://formsubmit.co/yourgmail@gmail.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+        <div class="contact-footer">© Kimiaki Yasui</div>
+
+  </div>
+</div>
 
 <script>
-  const photos = document.querySelectorAll('.photo');
+/* ===== INTRO ===== */
+const intro=document.getElementById("intro");
+const main=document.getElementById("main");
+const nameBox=document.getElementById("intro-name");
 
-  const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('show');
-          }
-      });
-  }, {
-      threshold: 0.2
-  });
+const text="kentousubo";
+let i=0;
 
-  photos.forEach(photo => {
-      observer.observe(photo);
+setTimeout(()=>{
+  const typing=setInterval(()=>{
+    nameBox.textContent+=text[i];
+    i++;
+    if(i===text.length) clearInterval(typing);
+  },120);
+},200);
+
+// 少し間を置いてフェード → メインへ
+setTimeout(()=> intro.classList.add("fade-out"),1600);
+setTimeout(()=>{
+  intro.style.display="none";
+  main.style.display="block";
+  document.body.style.overflow="auto";
+},2400);
+
+/* ===== MAIN UI ===== */
+const start=document.getElementById("start");
+const work=document.getElementById("work");
+const beauty=document.getElementById("beauty");
+const profile=document.getElementById("profile");
+const contactForm=document.getElementById("contactForm");
+
+const mWork=document.getElementById("m-work");
+const mBeauty=document.getElementById("m-beauty");
+const mProfile=document.getElementById("m-profile");
+const mContact=document.getElementById("m-contact");
+
+function randomFloat(){
+  document.querySelectorAll('.gallery img').forEach(img=>{
+    img.style.setProperty('--x',(Math.random()*160-80)+'px');
+    img.style.setProperty('--y',(Math.random()*160-80)+'px');
   });
+}
+
+function hideAll(){
+  work.classList.remove('active');
+  beauty.classList.remove('active');
+  profile.style.display='none';
+  contactForm.style.display='none';
+  start.style.display='none';
+}
+
+mWork.onclick=()=>{ hideAll(); work.classList.add('active'); randomFloat(); };
+mBeauty.onclick=()=>{ hideAll(); beauty.classList.add('active'); randomFloat(); };
+mProfile.onclick=()=>{ hideAll(); profile.style.display='block'; };
+mContact.onclick=()=>{ hideAll(); contactForm.style.display='block'; };
+
+// 拡大モーダル
+document.querySelectorAll('.gallery img').forEach(img=>{
+  img.onclick=()=>{
+    const modal=document.createElement('div');
+    modal.className='modal';
+    modal.innerHTML=`<img src="${img.src}"><div class="close">×</div>`;
+    modal.querySelector('.close').onclick=()=>modal.remove();
+    modal.onclick=e=>{ if(e.target===modal) modal.remove(); };
+    document.body.appendChild(modal);
+  };
+});
+
+const mHome = document.getElementById("m-home");
+
+mHome.onclick = () => {
+  // 全部非表示
+  work.classList.remove('active');
+  beauty.classList.remove('active');
+  profile.style.display = 'none';
+  contactForm.style.display = 'none';
+
+  // 最初の写真だけ表示
+  start.style.display = 'block';
+
+  // ページトップへ
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
 </script>
 
 </body>
