@@ -77,7 +77,13 @@ body{
   line-height:1.6;
   z-index:20;
 }
-.menu .name{ font-size:24px; font-weight:bold; }
+.menu .name{ 
+ 
+  font-size:24px;
+  margin: 0; 
+  padding: 0;
+
+  font-weight:bold; }
 .menu span{ cursor:pointer; display:block; }
 
 /* ===== 初期写真 ===== */
@@ -99,6 +105,7 @@ body{
   padding:270px 80px 120px;
 }
 .gallery img{
+  padding-top: 40px;
   width:60%;
   max-width:220px;
   margin:auto;
@@ -189,6 +196,29 @@ body{
 .text-1{
   font-size: 14px;
 }
+.text-2{
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+}
+#intro-name{
+  text-align:center;
+  z-index:10;
+  white-space:nowrap;
+}
+
+.intro-role{
+  font-size:18px;
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+
+.intro-name{
+  font-size:40px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
 </style>
 </head>
 
@@ -201,14 +231,19 @@ body{
     <img src="art.jpg" class="ip right-top">
     <img src="aunt1.jpg" class="ip right-bottom">
   </div>
-  <div id="intro-name"></div>
+  <div id="intro-name">
+  <div class="intro-role">Photographer</div>
+  <div class="intro-name"></div>
+
+</div>
+
 </div>
 
 <!-- ===== MAIN ===== -->
 <div id="main">
 
   <div class="menu">
-    <div class="name" id="m-home">kento ustubo</div>
+    <div class="name" id="m-home"><p class="text-2">Photographer</p>kento ustubo</div>
 
     <span id="m-work">work</span>
     <span id="m-beauty">beauty</span>
@@ -253,7 +288,7 @@ body{
   </div>
 
   <div id="contactForm">
-    <form action="https://formsubmit.co/yourgmail@gmail.com" method="POST">
+    <form action="https://formsubmit.co/kimiakiyasui2@gmail.com" method="POST">
       <input type="hidden" name="_captcha" value="false">
       <input type="text" name="name" placeholder="Name" required>
       <input type="email" name="email" placeholder="Email" required>
@@ -269,18 +304,18 @@ body{
 /* ===== INTRO ===== */
 const intro=document.getElementById("intro");
 const main=document.getElementById("main");
-const nameBox=document.getElementById("intro-name");
-
-const text="kento Usubo";
-let i=0;
+const nameBox = document.querySelector(".intro-name");
+const text = "Kento Ustubo";
+let i = 0;
 
 setTimeout(()=>{
-  const typing=setInterval(()=>{
-    nameBox.textContent+=text[i];
+  const typing = setInterval(()=>{
+    nameBox.textContent += text[i];
     i++;
-    if(i===text.length) clearInterval(typing);
+    if(i === text.length) clearInterval(typing);
   },120);
 },200);
+
 
 // 少し間を置いてフェード → メインへ
 setTimeout(()=> intro.classList.add("fade-out"),1600);
